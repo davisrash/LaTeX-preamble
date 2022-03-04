@@ -1,8 +1,4 @@
 % TODO:
-%  - Fix \deriv and \pderiv for inline math (mathchoice)
-%     - Add mixed partial capability with \pderiv*
-%     - Overall robustify
-%     - OR find a good package that does this already
 %  - Standardize this preamble
 %     - csquotes
 %     - biblatex
@@ -17,8 +13,9 @@
 \usepackage{mathtools,mleftright}
 \usepackage{amssymb}
 \usepackage{empheq}
-\usepackage[version=4]{mhchem}
+\usepackage{derivative}
 
+\usepackage[version=4]{mhchem}
 \usepackage[print-unity-mantissa=false]{siunitx}
 \DeclareSIUnit\atmosphere{atm}
 \DeclareSIUnit\sq{\ensuremath{\square}}
@@ -36,19 +33,6 @@
     {\mathrm e}^{#1}%
   \fi
 }
-%
-% \def\@eu^#1{%
-%   \expandafter\def\expandafter\@eu@start\expandafter{\@car#1\@nil}%
-%   \expandafter\ifx\@eu@start\iu\relax
-%     \@@eu^{\,#1}%
-%   \else
-%     \expandafter\ifx\@eu@start\ju\relax
-%       \@@eu^{\,#1}%
-%     \else
-%       \@@eu^{#1}%
-%     \fi
-%   \fi}
-% \def\@@eu{\mathrm{e}}
 \makeatother
 
 \newcommand*{\iu}{\mathrm i}  % Imaginary unit i
@@ -82,26 +66,6 @@
 \DeclareMathOperator{\expect}{E}
 \DeclareMathOperator{\var}   {Var}
 \DeclareMathOperator{\cov}   {Cov}
-
-\makeatletter
-\newcommand*{\diff}{\mathop{}\!\@diff}
-\newcommand*{\deriv}[3][]{\mathchoice{\frac{\@diff^{#1}#2}{\@diff#3^{#1}}}
-  {\diff^{#1}#2/\@diff#3^{#1}}
-  {\diff^{#1}#2/\@diff#3^{#1}}
-  {\diff^{#1}#2/\@diff#3^{#1}}}
-\def\@diff{\mathrm{d}}
-\newcommand*{\pdiff}{\mathop{}\!\@pdiff}
-\newcommand*{\pderiv}[3][]{\mathchoice{\frac{\@pdiff^{#1}#2}{\@pdiff#3^{#1}}}
-  {\pdiff^{#1}#2/\@pdiff#3^{#1}}
-  {\pdiff^{#1}#2/\@pdiff#3^{#1}}
-  {\pdiff^{#1}#2/\@pdiff#3^{#1}}}
-\def\@pdiff{\partial}
-\makeatother
-
-\newcommand*{\dbar}{\mkern2mu\mathchar'26\mkern-11mu \mathrm{d}}
-\newcommand*{\idiff}{\mathop{}\!\dbar}  % Inexact differential
-
-\newcommand*{\Diff}{\mathop{}\!\mathrm{\Delta}}  % Increment
 
 \DeclareMathOperator{\diag}{diag}
 \newcommand*{\transpose}{^{\mathsf T}}
@@ -155,13 +119,6 @@
 \newcommand{\upint} {\DOTSI\upintop\ilimits@}
 \newcommand{\upoint}{\DOTSI\upointop\ilimits@}
 \makeatother
-
-% Eval right bar
-\NewDocumentCommand{\evalat}{sO{\big}mm}{%
-  \IfBooleanTF{#1}
-    {\mleft. #3 \mright|_{#4}}
-    {#3#2|_{#4}}%
-}
 
 % Nested display fractions with better vertical spacing
 \NewDocumentCommand{\qfrac}{smm}{%
