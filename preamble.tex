@@ -1,0 +1,243 @@
+% TODO:
+%  - Fix \deriv and \pderiv for inline math (mathchoice)
+%     - Add mixed partial capability with \pderiv*
+%     - Overall robustify
+%     - OR find a good package that does this already
+%  - Standardize this preamble
+%     - csquotes
+%     - biblatex
+%     - siunitx
+%     - microtype
+%  - fancyhf -> plain (or new name, like "assignment")
+
+\usepackage[LGR,T1]{fontenc}
+\usepackage[greek,american]{babel}
+\usepackage{blindtext}
+
+\usepackage{mathtools,mleftright}
+\usepackage{amssymb}
+\usepackage{empheq}
+\usepackage[version=4]{mhchem}
+
+\usepackage[print-unity-mantissa=false]{siunitx}
+\DeclareSIUnit\atmosphere{atm}
+\DeclareSIUnit\sq{\ensuremath{\square}}
+
+% Upright symbols
+\makeatletter
+\newcommand*{\eu}{\@ifnextchar^{\eu@}{\eu@^{}}}
+\def\eu@^#1{%
+  \expandafter\def\expandafter\eu@start\expandafter{\@car#1\@nil}%
+  \ifnum\expandafter\ifx\eu@start\iu\relax 1
+      \else\ifnum\expandafter\ifx\eu@start\ju\relax 1\else 0\fi\fi
+    =1 %
+    {\mathrm e}^{\,#1}%
+  \else
+    {\mathrm e}^{#1}%
+  \fi
+}
+%
+% \def\@eu^#1{%
+%   \expandafter\def\expandafter\@eu@start\expandafter{\@car#1\@nil}%
+%   \expandafter\ifx\@eu@start\iu\relax
+%     \@@eu^{\,#1}%
+%   \else
+%     \expandafter\ifx\@eu@start\ju\relax
+%       \@@eu^{\,#1}%
+%     \else
+%       \@@eu^{#1}%
+%     \fi
+%   \fi}
+% \def\@@eu{\mathrm{e}}
+\makeatother
+
+\newcommand*{\iu}{\mathrm i}  % Imaginary unit i
+\newcommand*{\ju}{\mathrm j}  % Imaginary unit j
+
+\newcommand*{\ped}[1]{\ensuremath{_{\textnormal #1}}}  % Pedex
+\newcommand*{\ap} [1]{\ensuremath{^{\textnormal #1}}}  % Apex
+
+\newcommand*{\ssep}{\mid}  % Set separation symbol
+
+% Operators
+\DeclareMathOperator{\ent}{ent}            % ...
+\DeclareMathOperator{\sgn}{sgn}            % Signum function
+
+\DeclareMathOperator{\dom}  {dom}
+\DeclareMathOperator{\codom}{codom}
+\DeclareMathOperator{\imag} {Im}  % Overloaded
+
+\DeclareMathOperator{\erf} {erf}            % Error function
+\DeclareMathOperator{\erfc}{erfc}          % ...
+
+\DeclareMathOperator{\bigOh}{\mathcal O}  % Big Oh
+
+\renewcommand*{\Re}{\operatorname{Re}}     % Real part
+\renewcommand*{\Im}{\operatorname{Im}}     % Imaginary part
+
+\DeclareMathOperator{\csch}{csch}
+\DeclareMathOperator{\sech}{sech}
+
+\renewcommand*{\Pr}{\operatorname{Pr}}
+\DeclareMathOperator{\expect}{E}
+\DeclareMathOperator{\var}   {Var}
+\DeclareMathOperator{\cov}   {Cov}
+
+\makeatletter
+\newcommand*{\diff}{\mathop{}\!\@diff}
+\newcommand*{\deriv}[3][]{\mathchoice{\frac{\@diff^{#1}#2}{\@diff#3^{#1}}}
+  {\diff^{#1}#2/\@diff#3^{#1}}
+  {\diff^{#1}#2/\@diff#3^{#1}}
+  {\diff^{#1}#2/\@diff#3^{#1}}}
+\def\@diff{\mathrm{d}}
+\newcommand*{\pdiff}{\mathop{}\!\@pdiff}
+\newcommand*{\pderiv}[3][]{\mathchoice{\frac{\@pdiff^{#1}#2}{\@pdiff#3^{#1}}}
+  {\pdiff^{#1}#2/\@pdiff#3^{#1}}
+  {\pdiff^{#1}#2/\@pdiff#3^{#1}}
+  {\pdiff^{#1}#2/\@pdiff#3^{#1}}}
+\def\@pdiff{\partial}
+\makeatother
+
+\newcommand*{\dbar}{\mkern2mu\mathchar'26\mkern-11mu \mathrm{d}}
+\newcommand*{\idiff}{\mathop{}\!\dbar}  % Inexact differential
+
+\newcommand*{\Diff}{\mathop{}\!\mathrm{\Delta}}  % Increment
+
+\DeclareMathOperator{\diag}{diag}
+\newcommand*{\transpose}{^{\mathsf T}}
+
+% Upright integrals from MathDesign
+\makeatletter
+\def\upintkern@{\mkern-7mu\mathchoice{\mkern-3.5mu}{}{}{}}
+\def\upintdots@{\mathchoice{\mkern-4mu\@cdots\mkern-4mu}
+  {{\cdotp}\mkern1.5mu{\cdotp}\mkern1.5mu{\cdotp}}
+  {{\cdotp}\mkern1mu{\cdotp}\mkern1mu{\cdotp}}
+  {{\cdotp}\mkern1mu{\cdotp}\mkern1mu{\cdotp}}}
+\newcommand{\upiint}    {\DOTSI\protect\UpMultiIntegral{2}}
+\newcommand{\upiiint}   {\DOTSI\protect\UpMultiIntegral{3}}
+\newcommand{\upiiiint}  {\DOTSI\protect\UpMultiIntegral{4}}
+\newcommand{\upidotsint}{\DOTSI\protect\UpMultiIntegral{0}}
+\newcommand{\UpMultiIntegral}[1]{%
+  \edef\ints@c{\noexpand\upintop
+    \ifnum #1=\z@    \noexpand\upintdots@\else\noexpand\upintkern@\fi
+    \ifnum #1>\tw@   \noexpand\upintop\noexpand\upintkern@\fi
+    \ifnum #1>\thr@@ \noexpand\upintop\noexpand\upintkern@\fi
+    \noexpand\upintop\noexpand\ilimits@}%
+  \futurelet\@let@token\ints@a
+}
+\makeatother
+
+\DeclareFontFamily{OMX}{mdbch}{}
+\DeclareFontShape{OMX}{mdbch}{m} {n}{ <->s * [0.8]  mdbchr7v }{}
+\DeclareFontShape{OMX}{mdbch}{b} {n}{ <->s * [0.8]  mdbchb7v }{}
+\DeclareFontShape{OMX}{mdbch}{bx}{n}{<->ssub * mdbch/b/n}     {}
+
+\DeclareSymbolFont{uplargesymbols}{OMX}{mdbch}{m}{n}
+\SetSymbolFont{uplargesymbols}{bold}{OMX}{mdbch}{b}{n}
+\DeclareMathSymbol{\upintop} {\mathop}{uplargesymbols} {82}
+\DeclareMathSymbol{\upointop}{\mathop}{uplargesymbols}{"48}
+
+\DeclareFontEncoding{MDB}{}{}
+\DeclareFontFamily{MDB}{mdbch}{}
+\DeclareFontShape{MDB}{mdbch}{m} {n}{ <->s * [0.8]  mdbchrmb }{}
+\DeclareFontShape{MDB}{mdbch}{b} {n}{ <->s * [0.8]  mdbchbmb }{}
+\DeclareFontShape{MDB}{mdbch}{bx}{n}{<->ssub * mdbch/b/n}     {}
+\DeclareFontSubstitution{MDB}{cmr}{m}{n}
+\DeclareSymbolFont{mathdesignB}{MDB}{mdbch}{m}{n}%
+\SetSymbolFont{mathdesignB}{bold}{MDB}{mdbch}{b}{n}%
+\DeclareMathSymbol{\upintclockwise}    {\mathop}{mathdesignB}{128}
+\DeclareMathSymbol{\upointclockwise}   {\mathop}{mathdesignB}{130}
+\DeclareMathSymbol{\upointctrclockwise}{\mathop}{mathdesignB}{132}
+\DeclareMathSymbol{\upoiint}           {\mathop}{mathdesignB}{134}
+\DeclareMathSymbol{\upoiiint}          {\mathop}{mathdesignB}{136}
+
+\makeatletter
+\newcommand{\upint} {\DOTSI\upintop\ilimits@}
+\newcommand{\upoint}{\DOTSI\upointop\ilimits@}
+\makeatother
+
+% Eval right bar
+\NewDocumentCommand{\evalat}{sO{\big}mm}{%
+  \IfBooleanTF{#1}
+    {\mleft. #3 \mright|_{#4}}
+    {#3#2|_{#4}}%
+}
+
+% Nested display fractions with better vertical spacing
+\NewDocumentCommand{\qfrac}{smm}{%
+  \dfrac{\IfBooleanT{#1}{\vphantom{\big|}}#2}{\mathstrut #3}%
+}
+
+% Optional matrix vertical stretch and column alignment
+\makeatletter
+\renewcommand*{\env@matrix}[1][\arraystretch]{%
+  \@ifnextchar[% ]
+    {\env@matrix@i[{#1}]}
+    {\env@matrix@i[{#1}][{*\c@MaxMatrixCols c}]}}
+\def\env@matrix@i[#1][#2]{%
+  \edef\arraystretch{#1}%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#2}%
+}
+\makeatother
+
+\usepackage{amsthm}
+\newtheorem{problem} {Problem} [section]
+\newtheorem{exercise}{Exercise}[section]
+\makeatletter
+\newenvironment{solution}[1][\solution@name]{\par
+  \normalfont \topsep6\p@\@plus6\p@\relax
+  \trivlist
+  \item\relax
+    {\itshape #1\@addpunct{.}}\hspace\labelsep\ignorespaces
+}{\endtrivlist\@endpefalse}
+\def\solution@name{Solution}
+\makeatother
+
+\usepackage{isomath}
+\let\mathpi\pi
+\renewcommand*{\pi}{\text{\textrm{\greektext p}}}
+
+% Wide box for empheq
+\newcommand*{\widefbox}[1]{\fbox{\hspace{1em}#1\hspace{1em}}}
+
+% Lists
+\usepackage[inline]{enumitem}
+
+% Tables
+\usepackage{booktabs}
+
+% Figures and graphics
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+
+% Header and footer
+\usepackage{fancyhdr}
+\usepackage{titling}
+
+\makeatletter
+\DeclareRobustCommand*{\course}[1]{\gdef\@course{#1}}
+\DeclareRobustCommand*{\shorttitle}[1]{\gdef\@shorttitle{#1}}
+\let\@course\@empty
+\gdef\@shorttitle{\thetitle}
+\newcommand{\makeheadfoot}{%
+  \pagestyle{fancy}%
+  \fancyhead[L,C]{}%
+  \fancyhead[R]{\textbf\@course}%
+  \fancyfoot[L]{\textsc\@shorttitle}%
+  \fancyfoot[C]{\thepage}%
+  \fancyfoot[R]{\textsc\theauthor}%
+  \global\let\makeheadfoot\relax
+  \global\let\@course\@empty
+  \global\let\@shorttitle\@empty
+  \global\let\course\relax
+  \global\let\shorttitle\relax
+}
+\makeatother
+
+% Symbolic footnote numbering
+\renewcommand*{\thefootnote}{\fnsymbol{footnote}}
+
+\usepackage[hidelinks]{hyperref}
