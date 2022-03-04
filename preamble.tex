@@ -1,4 +1,6 @@
 % TODO:
+%  - \eu^{} breaks
+%  - \eu^{\ju} spacing probably too big
 %  - Standardize this preamble
 %     - csquotes
 %     - biblatex
@@ -17,58 +19,44 @@
 
 \usepackage[version=4]{mhchem}
 \usepackage[print-unity-mantissa=false]{siunitx}
-\DeclareSIUnit\atmosphere{atm}
-\DeclareSIUnit\sq{\ensuremath{\square}}
 
 % Upright symbols
 \makeatletter
-\newcommand*{\eu}{\@ifnextchar^{\eu@}{\eu@^{}}}
-\def\eu@^#1{%
-  \expandafter\def\expandafter\eu@start\expandafter{\@car#1\@nil}%
-  \ifnum\expandafter\ifx\eu@start\iu\relax 1
-      \else\ifnum\expandafter\ifx\eu@start\ju\relax 1\else 0\fi\fi
-    =1 %
-    {\mathrm e}^{\,#1}%
+\newcommand\eu{\@ifnextchar^{\@eu}{\@@eu}}
+\def\@eu^#1{%
+  \expandafter\def\expandafter\@eu@start\expandafter{\@car#1\@nil}%
+  \expandafter\ifx\@eu@start\ju\relax
+    \@@eu^{\,#1}%
   \else
-    {\mathrm e}^{#1}%
+    \@@eu^{#1}%
   \fi
 }
+\def\@@eu{\ensuremath{\mathrm{e}}}
 \makeatother
 
-\newcommand*{\iu}{\mathrm i}  % Imaginary unit i
-\newcommand*{\ju}{\mathrm j}  % Imaginary unit j
+\newcommand*\iu{\mathrm i}  % Imaginary unit i
+\newcommand*\ju{\mathrm j}  % Imaginary unit j
 
-\newcommand*{\ped}[1]{\ensuremath{_{\textnormal #1}}}  % Pedex
-\newcommand*{\ap} [1]{\ensuremath{^{\textnormal #1}}}  % Apex
-
-\newcommand*{\ssep}{\mid}  % Set separation symbol
+\newcommand*\ped[1]{\ensuremath{_{\textnormal #1}}}  % Pedex
+\newcommand*\ap [1]{\ensuremath{^{\textnormal #1}}}  % Apex
 
 % Operators
-\DeclareMathOperator{\ent}{ent}            % ...
+\DeclareMathOperator{\ent}{ent}
 \DeclareMathOperator{\sgn}{sgn}            % Signum function
 
-\DeclareMathOperator{\dom}  {dom}
-\DeclareMathOperator{\codom}{codom}
-\DeclareMathOperator{\imag} {Im}  % Overloaded
-
-\DeclareMathOperator{\erf} {erf}            % Error function
-\DeclareMathOperator{\erfc}{erfc}          % ...
-
-\DeclareMathOperator{\bigOh}{\mathcal O}  % Big Oh
-
-\renewcommand*{\Re}{\operatorname{Re}}     % Real part
-\renewcommand*{\Im}{\operatorname{Im}}     % Imaginary part
+\renewcommand*\Re{\operatorname{Re}}     % Real part
+\renewcommand*\Im{\operatorname{Im}}     % Imaginary part
 
 \DeclareMathOperator{\csch}{csch}
 \DeclareMathOperator{\sech}{sech}
 
-\renewcommand*{\Pr}{\operatorname{Pr}}
+\renewcommand*\Pr{\operatorname{Pr}}
 \DeclareMathOperator{\expect}{E}
 \DeclareMathOperator{\var}   {Var}
 \DeclareMathOperator{\cov}   {Cov}
 
 \DeclareMathOperator{\diag}{diag}
-\newcommand*{\transpose}{^{\mathsf T}}
+\newcommand*\transpose{^{\mathsf T}}
 
 % Upright integrals from MathDesign
 \makeatletter
@@ -77,11 +65,11 @@
   {{\cdotp}\mkern1.5mu{\cdotp}\mkern1.5mu{\cdotp}}
   {{\cdotp}\mkern1mu{\cdotp}\mkern1mu{\cdotp}}
   {{\cdotp}\mkern1mu{\cdotp}\mkern1mu{\cdotp}}}
-\newcommand{\upiint}    {\DOTSI\protect\UpMultiIntegral{2}}
-\newcommand{\upiiint}   {\DOTSI\protect\UpMultiIntegral{3}}
-\newcommand{\upiiiint}  {\DOTSI\protect\UpMultiIntegral{4}}
-\newcommand{\upidotsint}{\DOTSI\protect\UpMultiIntegral{0}}
-\newcommand{\UpMultiIntegral}[1]{%
+\newcommand\upiint    {\DOTSI\protect\UpMultiIntegral{2}}
+\newcommand\upiiint   {\DOTSI\protect\UpMultiIntegral{3}}
+\newcommand\upiiiint  {\DOTSI\protect\UpMultiIntegral{4}}
+\newcommand\upidotsint{\DOTSI\protect\UpMultiIntegral{0}}
+\newcommand\UpMultiIntegral[1]{%
   \edef\ints@c{\noexpand\upintop
     \ifnum #1=\z@    \noexpand\upintdots@\else\noexpand\upintkern@\fi
     \ifnum #1>\tw@   \noexpand\upintop\noexpand\upintkern@\fi
@@ -116,8 +104,8 @@
 \DeclareMathSymbol{\upoiiint}          {\mathop}{mathdesignB}{136}
 
 \makeatletter
-\newcommand{\upint} {\DOTSI\upintop\ilimits@}
-\newcommand{\upoint}{\DOTSI\upointop\ilimits@}
+\newcommand\upint {\DOTSI\upintop\ilimits@}
+\newcommand\upoint{\DOTSI\upointop\ilimits@}
 \makeatother
 
 % Nested display fractions with better vertical spacing
@@ -127,7 +115,7 @@
 
 % Optional matrix vertical stretch and column alignment
 \makeatletter
-\renewcommand*{\env@matrix}[1][\arraystretch]{%
+\renewcommand\env@matrix[1][\arraystretch]{%
   \@ifnextchar[% ]
     {\env@matrix@i[{#1}]}
     {\env@matrix@i[{#1}][{*\c@MaxMatrixCols c}]}}
@@ -154,10 +142,10 @@
 
 \usepackage{isomath}
 \let\mathpi\pi
-\renewcommand*{\pi}{\text{\textrm{\greektext p}}}
+\renewcommand*\pi{\text{\textrm{\greektext p}}}
 
 % Wide box for empheq
-\newcommand*{\widefbox}[1]{\fbox{\hspace{1em}#1\hspace{1em}}}
+\newcommand*\widefbox[1]{\fbox{\hspace{1em}#1\hspace{1em}}}
 
 % Lists
 \usepackage[inline]{enumitem}
@@ -165,36 +153,26 @@
 % Tables
 \usepackage{booktabs}
 
-% Figures and graphics
-\usepackage{graphicx}
-\usepackage{pgfplots}
-\pgfplotsset{compat=newest}
-
 % Header and footer
 \usepackage{fancyhdr}
 \usepackage{titling}
 
 \makeatletter
-\DeclareRobustCommand*{\course}[1]{\gdef\@course{#1}}
-\DeclareRobustCommand*{\shorttitle}[1]{\gdef\@shorttitle{#1}}
+\DeclareRobustCommand*\course[1]{\gdef\@course{#1}}
+\DeclareRobustCommand*\shorttitle[1]{\gdef\@shorttitle{#1}}
 \let\@course\@empty
 \gdef\@shorttitle{\thetitle}
-\newcommand{\makeheadfoot}{%
+\newcommand\makeheadfoot{%
   \pagestyle{fancy}%
   \fancyhead[L,C]{}%
   \fancyhead[R]{\textbf\@course}%
   \fancyfoot[L]{\textsc\@shorttitle}%
   \fancyfoot[C]{\thepage}%
   \fancyfoot[R]{\textsc\theauthor}%
-  \global\let\makeheadfoot\relax
-  \global\let\@course\@empty
-  \global\let\@shorttitle\@empty
-  \global\let\course\relax
-  \global\let\shorttitle\relax
 }
 \makeatother
 
 % Symbolic footnote numbering
-\renewcommand*{\thefootnote}{\fnsymbol{footnote}}
+\renewcommand*\thefootnote{\fnsymbol{footnote}}
 
 \usepackage[hidelinks]{hyperref}

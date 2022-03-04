@@ -1,4 +1,8 @@
 {
+    "files.associations": {
+        ".tex": "latex-expl3"
+    },
+
     "[jsonc]": {
         "editor.quickSuggestions": {
             "strings": true
@@ -6,7 +10,7 @@
         "editor.suggest.insertMode": "replace"
     },
 
-    "[latex]": {
+    "[latex-expl3]": {
         "files.insertFinalNewline": true,
         "files.trimFinalNewlines": true,
         "files.trimTrailingWhitespace": true,
