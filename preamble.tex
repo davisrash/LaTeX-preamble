@@ -38,15 +38,12 @@
 \newcommand*\iu{\mathrm i}  % Imaginary unit i
 \newcommand*\ju{\mathrm j}  % Imaginary unit j
 
-\newcommand*\ped[1]{\ensuremath{_{\textnormal #1}}}  % Pedex
-\newcommand*\ap [1]{\ensuremath{^{\textnormal #1}}}  % Apex
-
 % Operators
 \DeclareMathOperator{\ent}{ent}
-\DeclareMathOperator{\sgn}{sgn}            % Signum function
+\DeclareMathOperator{\sgn}{sgn}       % Signum function
 
-\renewcommand*\Re{\operatorname{Re}}     % Real part
-\renewcommand*\Im{\operatorname{Im}}     % Imaginary part
+\renewcommand*\Re{\operatorname{Re}}  % Real part
+\renewcommand*\Im{\operatorname{Im}}  % Imaginary part
 
 \DeclareMathOperator{\csch}{csch}
 \DeclareMathOperator{\sech}{sech}
@@ -96,8 +93,8 @@
 \DeclareFontShape{MDB}{mdbch}{b} {n}{ <->s * [0.8]  mdbchbmb }{}
 \DeclareFontShape{MDB}{mdbch}{bx}{n}{<->ssub * mdbch/b/n}     {}
 \DeclareFontSubstitution{MDB}{cmr}{m}{n}
-\DeclareSymbolFont{mathdesignB}{MDB}{mdbch}{m}{n}%
-\SetSymbolFont{mathdesignB}{bold}{MDB}{mdbch}{b}{n}%
+\DeclareSymbolFont{mathdesignB}{MDB}{mdbch}{m}{n}
+\SetSymbolFont{mathdesignB}{bold}{MDB}{mdbch}{b}{n}
 \DeclareMathSymbol{\upintclockwise}    {\mathop}{mathdesignB}{128}
 \DeclareMathSymbol{\upointclockwise}   {\mathop}{mathdesignB}{130}
 \DeclareMathSymbol{\upointctrclockwise}{\mathop}{mathdesignB}{132}
@@ -124,13 +121,12 @@
   \edef\arraystretch{#1}%
   \hskip -\arraycolsep
   \let\@ifnextchar\new@ifnextchar
-  \array{#2}%
-}
+  \array{#2}}
 \makeatother
 
 \usepackage{amsthm}
-\newtheorem{problem} {Problem} [section]
-\newtheorem{exercise}{Exercise}[section]
+\newtheorem{problem}{Problem}[section]
+\newtheorem{exercise}{Exercise}
 \makeatletter
 \newenvironment{solution}[1][\solution@name]{\par
   \normalfont \topsep6\p@\@plus6\p@\relax
@@ -143,7 +139,7 @@
 
 \usepackage{isomath}
 \let\mathpi\pi
-\renewcommand*\pi{\text{\textrm{\greektext p}}}
+\renewcommand*\pi{\textnormal{\greektext p}}
 
 % Wide box for empheq
 \newcommand*\widefbox[1]{\fbox{\hspace{1em}#1\hspace{1em}}}
@@ -163,14 +159,12 @@
 \DeclareRobustCommand*\shorttitle[1]{\gdef\@shorttitle{#1}}
 \let\@course\@empty
 \gdef\@shorttitle{\thetitle}
-\newcommand\makeheadfoot{%
-  \pagestyle{fancy}%
-  \fancyhead[L,C]{}%
-  \fancyhead[R]{\textbf\@course}%
-  \fancyfoot[L]{\textsc\@shorttitle}%
-  \fancyfoot[C]{\thepage}%
-  \fancyfoot[R]{\textsc\theauthor}%
-}
+\pagestyle{fancy}
+\fancyhead[L,C]{}
+\fancyhead[R]{\textbf\@course}
+\fancyfoot[L]{\textsc\@shorttitle}
+\fancyfoot[C]{\thepage}
+\fancyfoot[R]{\textsc\theauthor}
 \makeatother
 
 % Symbolic footnote numbering

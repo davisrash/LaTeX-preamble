@@ -1,6 +1,6 @@
 {
     "files.associations": {
-        ".tex": "latex-expl3"
+        "*.tex": "latex-expl3"
     },
 
     "[jsonc]": {
