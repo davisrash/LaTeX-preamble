@@ -1,51 +1,12 @@
-% TODO:
-%  - \eu^{} breaks
-%  - \eu^{\ju} spacing probably too big
-%  - Standardize this preamble
-%     - csquotes
-%     - biblatex
-%     - siunitx
-%     - microtype
-%  - fancyhf -> plain (or new name, like "assignment")
-% see https://gist.github.com/ZacCranko/ba90923045996eb6b0fb/
+\let\mathpi\pi
+\renewcommand*\pi{\textnormal{\greektext p}}
+\newcommand*\iu{\mathrm{i}}
+\newcommand*\eu{\mathrm{e}}
 
-\usepackage[LGR,T1]{fontenc}
-\usepackage[greek,american]{babel}
-\usepackage{blindtext}
+\DeclareMathOperator{\sgn}{sgn}
 
-\usepackage{csquotes}
-\usepackage[style=phys,backend=biber,articletitle=false,biblabel=brackets,chaptertitle=false,pageranges=false]{biblatex}
-
-\usepackage{mathtools,mleftright}
-\usepackage{amssymb}
-\usepackage{empheq}
-\usepackage{derivative}
-
-\usepackage[version=4]{mhchem}
-\usepackage[print-unity-mantissa=false]{siunitx}
-
-% Upright symbols
-\makeatletter
-\newcommand\eu{\@ifnextchar^{\@eu}{\@@eu}}
-\def\@eu^#1{%
-  \expandafter\def\expandafter\@eu@start\expandafter{\@car#1\@nil}%
-  \expandafter\ifx\@eu@start\ju\relax
-    \@@eu^{\,#1}%
-  \else
-    \@@eu^{#1}%
-  \fi
-}
-\def\@@eu{\ensuremath{\mathrm{e}}}
-\makeatother
-
-\newcommand*\iu{\mathrm i}  % Imaginary unit i
-\newcommand*\ju{\mathrm j}  % Imaginary unit j
-
-% Operators
-\DeclareMathOperator{\sgn}{sgn}       % Signum function
-
-\renewcommand*\Re{\operatorname{Re}}  % Real part
-\renewcommand*\Im{\operatorname{Im}}  % Imaginary part
+\renewcommand*\Re{\operatorname{Re}}
+\renewcommand*\Im{\operatorname{Im}}
 
 \DeclareMathOperator{\csch}{csch}
 \DeclareMathOperator{\sech}{sech}
@@ -56,7 +17,8 @@
 \DeclareMathOperator{\cov}   {Cov}
 
 \DeclareMathOperator{\diag}{diag}
-\newcommand*\transpose{^{\mathsf T}}
+\DeclareMathOperator{\adj} {adj}
+\newcommand*\transpose{^{\mathsf{T}}}
 
 % Upright integrals from MathDesign
 \makeatletter
@@ -126,7 +88,6 @@
   \array{#2}}
 \makeatother
 
-\usepackage{amsthm}
 \newtheorem{problem}{Problem}[section]
 \newtheorem{exercise}{Exercise}
 \makeatletter
@@ -139,22 +100,8 @@
 \def\solution@name{Solution}
 \makeatother
 
-\usepackage{isomath}
-\let\mathpi\pi
-\renewcommand*\pi{\textnormal{\greektext p}}
-
 % Wide box for empheq
 \newcommand*\widefbox[1]{\fbox{\hspace{1em}#1\hspace{1em}}}
-
-% Lists
-\usepackage[inline]{enumitem}
-
-% Tables
-\usepackage{booktabs}
-
-% Header and footer
-\usepackage{fancyhdr}
-\usepackage{titling}
 
 \makeatletter
 \DeclareRobustCommand*\course[1]{\gdef\@course{#1}}
@@ -171,5 +118,3 @@
 
 % Symbolic footnote numbering
 \renewcommand*\thefootnote{\fnsymbol{footnote}}
-
-\usepackage[hidelinks]{hyperref}
