@@ -11,11 +11,6 @@
 \DeclareMathOperator{\csch}{csch}
 \DeclareMathOperator{\sech}{sech}
 
-\renewcommand*\Pr{\operatorname{Pr}}
-\DeclareMathOperator{\expect}{E}
-\DeclareMathOperator{\var}   {Var}
-\DeclareMathOperator{\cov}   {Cov}
-
 \DeclareMathOperator{\diag}{diag}
 \DeclareMathOperator{\adj} {adj}
 \newcommand*\transpose{^{\mathsf{T}}}
@@ -69,6 +64,8 @@
 \newcommand\upint {\DOTSI\upintop\ilimits@}
 \newcommand\upoint{\DOTSI\upointop\ilimits@}
 \makeatother
+
+\renewcommand*\int{\upint}
 
 % Nested display fractions with better vertical spacing
 \NewDocumentCommand{\qfrac}{smm}{%

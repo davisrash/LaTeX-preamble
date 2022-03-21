@@ -1,0 +1,30 @@
+% assignment.sty
+% Copyright 2022 Davis Rash
+%
+% ...
+%
+\NeedsTeXFormat{LaTeX2e}
+\RequirePackage{expl3,xparse}[2018/05/09]
+\RequirePackage{l3keys2e}
+\ProvidesExplPackage{assignment}{2022/03/21}{0.1}{Description here}
+
+\bool_new:N \l__assign_pkg_italic_bool
+\bool_new:N \l__assign_pkg_upright_bool
+
+\keys_define:nn { assign/pkg }
+{
+  italic .choice:,
+  italic .default:n = { true },
+  italic / true .code:n =
+    {
+      \bool_set_true:N  \l__assign_pkg_italic_bool
+      \bool_set_false:N \l__assign_pkg_upright_bool
+    },
+  italic / false .code:n =
+    {
+
+    },
+  italic / unknown .code:n =
+    { \msg_error:nnx { assign } { boolean-values-only } \l_keys_key_str },
+    
+}
