@@ -15,6 +15,11 @@
 \DeclareMathOperator{\adj} {adj}
 \newcommand*\transpose{^{\mathsf{T}}}
 
+\DeclarePairedDelimiter\bra{\langle}{\rvert}
+\DeclarePairedDelimiter\ket{\lvert}{\rangle}
+\DeclarePairedDelimiterX\braket[2]{\langle}{\rangle}
+  {#1\delimsize\vert\mathopen{}#2}
+
 % Upright integrals from MathDesign
 \makeatletter
 \def\upintkern@{\mkern-7mu\mathchoice{\mkern-3.5mu}{}{}{}}
@@ -61,7 +66,7 @@
 \DeclareMathSymbol{\upoiiint}          {\mathop}{mathdesignB}{136}
 
 \makeatletter
-\newcommand\upint {\DOTSI\upintop\ilimits@}
+\newcommand\upint{\DOTSI\upintop\ilimits@}
 \newcommand\upoint{\DOTSI\upointop\ilimits@}
 \makeatother
 
